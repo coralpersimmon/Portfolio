@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.9">
+    <title>Li-Wen Su Portfolio</title>
+    <link href="./static/tailwind.min.css" rel="stylesheet">
+
+    <meta property="og:description" content="2026作品集">
+    <meta property="og:url" content="https://coralpersimmon.github.io/Portfolio/">
+    <meta property="og:type" content="website">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@300;400;700&display=swap');
+
+        body {
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+            scroll-behavior: smooth;
+            background-color: #ffffff;
+            /* 隱藏主視窗滾動條上下箭頭並設圓角 */
+            scrollbar-width: thin;
+        }
+
+        /* 全域滾動條自定義 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            border: 2px solid transparent;
+            background-clip: content-box;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(0, 0, 0, 0.25);
+        }
+
+        ::-webkit-scrollbar-button {
+            display: none;
+        }
+
+        /* 側欄 */
+        .sidebar-container {
+            background-color: #e9eff4;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 類別標題 */
+        .menu-category {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #8fa2b3;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 1.5rem 1.5rem 0.5rem 1.5rem;
+        }
+
+        /* 選單連結 */
+        .menu-link {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 1rem 1.5rem;
+            color: #5d6d7e;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            font-size: 0.9rem;
+            font-weight: 500;
+            position: relative;
+            text-decoration: none;
+        }
+
+        /* 技術標籤 */
+        .tech-tag {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 4px;
+            padding: 2px 6px;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, 0.05);
+            color: #7f8c8d;
+        }
+
+        /* 滑鼠懸停 */
+        .menu-link:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+            color: #2c3e50;
+        }
+
+        /* 滑鼠選中 */
+        .menu-link.active {
+            background-color: #8aaac8;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(44, 62, 80, 0.15);
+        }
+
+        .menu-link.active .tech-tag {
+            background-color: rgba(255, 255, 255, 0.30);
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* 指示條 */
+        .menu-link.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 20%;
+            height: 60%;
+            width: 4px;
+            background-color: #fccc7f;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .project-section {
+            min-height: 100vh;
+            padding: 6rem 4rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        /* 圖片展示框：確保圖片自適應 */
+        .project-image-container {
+            width: 100%;
+            margin-bottom: 2.5rem;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            background-color: #f8fafc;
+        }
+
+        .project-image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+
+        /* 證照 */
+        .cert-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.2s ease;
+        }
+
+        .cert-card:hover {
+            transform: translateY(-4px);
+        }
+
+        /* 證照-圖片 */
+        .cert-card-img-container {
+            flex-shrink: 0;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: zoom-in;
+            transition: transform 0.3s ease;
+            border: 1px solid #e5e7eb;
+            background-color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        /* 懸停動畫 */
+        .cert-card-img-container:hover {
+            transform: scale(1.02);
+        }
+
+        .cert-card-img-container img {
+            width: 100%;
+            display: block;
+            object-fit: cover;
+        }
+
+        /* 大圖 */
+        .project-image-container {
+            width: 100%;
+            margin-bottom: 2.5rem;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            background-color: #f8fafc;
+        }
+
+        .project-image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+
+        /* 小圖 */
+        .project-block-mini {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            background-color: #f3f4f6;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 1.5rem;
+        }
+
+        .project-block-mini .img-wrap {
+            flex-shrink: 0;
+            width: 300px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: zoom-in;
+            transition: transform 0.3s ease;
+        }
+
+        /* 懸停動畫 */
+        .project-block-mini .img-wrap:hover {
+            transform: scale(1.02);
+        }
+
+        .project-block-mini .img-wrap img {
+            width: 100%;
+            display: block;
+        }
+
+        /* 雙圖 */
+        .img-double-wrap {
+            flex-shrink: 0;
+            width: 400px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: zoom-in;
+        }
+
+        /* 雙圖-橫式 */
+        .img-double-wrap .img-item img {
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .img-double-wrap .img-item img:hover {
+            transform: scale(1.02);
+        }
+
+        /* 雙圖-直式 */
+        @media (max-width: 1024px) {
+            .img-double-wrap {
+                width: 350px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .project-block-mini {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .img-double-wrap {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .img-double-wrap .img-item img {
+                height: auto;
+            }
+        }
+
+        /* Lightbox */
+        #image-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background-color: rgba(0, 0, 0, 0.9);
+            cursor: zoom-out;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        #image-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        #modal-img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 4px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        #image-modal.active #modal-img {
+            transform: scale(1);
+        }
+
+        @media (max-width: 768px) {
+            .project-block-mini {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .project-block-mini .img-wrap {
+                width: 100%;
+            }
+
+            .project-section {
+                padding: 4rem 1.5rem;
+            }
+        }
+
+        /* 側欄動畫 */
+        .sidebar-container {
+            transition: transform 0.3s ease;
+        }
+
+        /* 側欄隱藏 */
+        .sidebar-hidden {
+            transform: translateX(-100%);
+        }
+
+        /* 主內容區動畫與寬度控制 */
+        main {
+            transition: margin-left 0.3s ease;
+        }
+
+        /* 側欄隱藏時，主內容填滿螢幕 */
+        .main-full {
+            margin-left: 0 !important;
+        }
+
+        /* 打開側欄按鈕(側欄關閉時顯示) */
+        #open-sidebar-btn {
+            position: fixed;
+            top: 22px;
+            left: 20px;
+            z-index: 40;
+            display: none;
+            background: #8aaac8;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body class="text-slate-800">
+
+    <!-- 側欄 -->
+    <nav id="sidebar"
+        class="fixed top-0 left-0 w-64 h-screen sidebar-container z-50 border-r border-slate-200 flex flex-col">
+        <div class="p-8 pb-4 flex justify-between items-center">
+            <div>
+                <h1 class="text-xl font-bold tracking-wide text-slate-900">2026 Portfolio</h1>
+                <div class="h-1 w-8 bg-slate-900 mt-2"></div>
+            </div>
+            <button id="close-sidebar-btn" class="text-blue-300 hover:text-blue-400 text-2xl -mt-3">
+                <i class="fa-regular fa-circle-xmark"></i>
+            </button>
+        </div>
+
+        <div class="flex-1 overflow-y-auto sidebar-scrollable pt-4">
+            <div class="menu-category">作品展示</div>
+            <ul id="mainMenu">
+                <li>
+                    <a href="#Project1" class="menu-link active">
+                        <span>MyNote</span>
+                        <span class="tech-tag">Java / MySQL</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#Project2" class="menu-link">
+                        <span>幻世遠征</span>
+                        <span class="tech-tag">C# / Unity</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#Project3" class="menu-link">
+                        <span>旅遊目的地分析</span>
+                        <span class="tech-tag">Python</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#Project4" class="menu-link">
+                        <span>設計作品</span>
+                        <span class="tech-tag">Maya / Blender</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="menu-category">Certifications</div>
+            <ul>
+                <li>
+                    <a href="#certificates" class="menu-link">
+                        <span>證照</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 主欄位 -->
+    <main id="main-content" class="md:ml-64 bg-white">
+        <button id="open-sidebar-btn">
+            <i class="fa-solid fa-list-ul"></i>
+        </button>
+
+        <!-- 01 -->
+        <section id="Project1" class="project-section max-w-5xl mx-auto">
+            <header class="mb-10">
+                <div class="font-bold text-lg tracking-widest uppercase mb-4" style="color:#8aaac8;">合作專題</div>
+                <h2 class="text-5xl font-bold text-slate-900 tracking-tight">MyNote</h2>
+                <h2 class="text-2xl font-bold tracking-tight mt-2" style="color:#a9a9a9;">Local Web Note System</h2>
+            </header>
+
+            <div class="project-image-container">
+                <img src="static/image/MyNote_01.png" alt="MyNote_01">
+            </div>
+            <div class="project-image-container">
+                <img src="static/image/MyNote_02.png" alt="MyNote_01">
+            </div>
+
+            <span class="no-underline">🔗</span> <a href="https://github.com/persimmon0/MyNote" target="_blank"
+                class="inline-block mb-6 text-blue-600 font-bold hover:underline">GitHub 專案</a>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-slate-600">
+                <div class="md:col-span-2">
+                    <h4 class="font-bold text-lg mb-4 text-slate-900">專題簡介</h4>
+                    <ul class="space-y-2 text-slate-500">
+                        <li>• 可連線本地MySQL資料庫的網頁筆記系統</li>
+                        <li>• 支援不同使用者登入，各自管理個人筆記內容</li>
+                        <li>• 透過瀏覽器於本地端(localhost)操作</li>
+                    </ul>
+                </div>
+                <div class="md:col-span-2">
+                    <h4 class="font-bold text-lg mb-4 text-slate-900">技術與架構</h4>
+                    <ul class="space-y-2 text-slate-500">
+                        <li>• 主要語言：Java</li>
+                        <li>• Web Framework：Spring Boot</li>
+                        <li>• 架構：MVC</li>
+                        <li>• 資料庫：MySQL</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4 text-slate-900 uppercase tracking-widest">開發工具</h4>
+                    <ul class="space-y-2 text-slate-500">
+                        <li>• IDE：Eclipse</li>
+                        <li>• 版本控制：Github ,Sourcetree</li>
+                    </ul>
+                </div>
+                <div class="md:col-span-2">
+                    <h4 class="font-bold text-lg mb-4 text-slate-900">負責項目</h4>
+                    <ul class="space-y-2 text-slate-500">
+                        <li>• 筆記功能實作</li>
+                        <li>• 左側筆記清單與內容顯示</li>
+                        <li>• 後端資料存取與資料表設計</li>
+                        <li>• 前端畫面串接後端功能與調整</li>
+                        <li>• GitHub倉庫建立與維護、Sourcetree版本管理</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 02 -->
+        <section id="Project2" class="project-section max-w-5xl mx-auto">
+            <header class="mb-10">
+                <div class="font-bold text-lg tracking-widest uppercase mb-4" style="color:#8aaac8;">合作專題</div>
+                <h2 class="text-5xl font-bold text-slate-900 tracking-tight">幻世遠征 Phantom World</h2>
+                <h2 class="text-2xl font-bold tracking-tight mt-2" style="color:#a9a9a9;">3D Action Game Demo</h2>
+            </header>
+            <div class="project-image-container">
+                <img src="static/image/PhantomWorld_01.png" alt="PhantomWorld_01">
+            </div>
+            <div class="project-image-container">
+                <img src="static/image/PhantomWorld_02.png" alt="PhantomWorld_02">
+            </div>
+
+            <span class="no-underline">🔗</span> <a href="https://youtu.be/gmyjKPnollA?si=GPm1vD4GCmGFjMCc&t=18"
+                target="_blank" class="inline-block mb-6 text-blue-600 font-bold hover:underline">YouTube 展示影片</a>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-slate-600">
+                <div class="md:col-span-2">
+                    <h4 class="font-bold text-lg mb-4 text-slate-900">專題簡介</h4>
+                    <ul class="space-y-2 text-slate-500">
+                        <li>• 參考《崩壞3rd》日系風格即時動作遊戲-練習專題</li>
+                        <li>• 多種技能與特效呈現</li>
+                        <li>• 即時切換角色操作</li>
+                        <li>• 角色培養與成長系統</li>
+                    </ul>
+                </div>
+                <div class="md:col-span-2">
+                    <h4 class="font-bold text-lg mb-4 text-slate-900">技術與工具</h4>
+                    <ul class="space-y-2 text-slate-500">
+                        <li>• 主要語言：C#</li>
+                        <li>• IDE：Visual Studio</li>
+                        <li>• 遊戲開發：Unity3D</li>
+                        <li>• 版本控制：GitLab ,Sourcetree</li>
+                    </ul>
+                </div>
+                <div class="md:col-span-2">
+                    <h4 class="font-bold text-lg mb-4 text-slate-900">負責項目</h4>
+                    <ul class="space-y-2 text-slate-500">
+                        <li>• 玩家系統：角色操控、Animator、狀態管理、攻擊系統、角色切換</li>
+                        <li>• 戰鬥特效與音效：技能觸發與效果呈現</li>
+                        <li>• 升級系統：角色成長與數值提升</li>
+                        <li>• UI：戰鬥介面(玩家資訊)、升級介面</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 02-01 -->
+            <div class="project-block-mini">
+                <div class="img-wrap" onclick="openModal(this)">
+                    <img src="static/image/PhantomWorld_03.png" alt="PhantomWorld_03">
+                </div>
+                <div class="content-wrap">
+                    <h4 class="font-bold text-lg mb-2 text-slate-900">玩家戰鬥</h4>
+                    <p class="text-slate-500 text-sm leading-relaxed">
+                        運用 Physics.OverlapSphere 進行攻擊範圍與命中判定；<br>
+                        同時使用觀察者模式(Observer Pattern)管理技能特效與音效觸發。
+                    </p>
+                </div>
+            </div>
+
+            <div class="project-block-mini">
+                <div class="img-wrap" onclick="openModal(this)">
+                    <img src="static/image/PhantomWorld_04.png" alt="PhantomWorld_04">
+                </div>
+                <div class="content-wrap">
+                    <h4 class="font-bold text-lg mb-2 text-slate-900">角色狀態</h4>
+                    <p class="text-slate-500 text-sm leading-relaxed">
+                        當玩家遭遇敵方攻擊，依據當前角色狀態(待機、移動、攻擊、閃避...)，<br>
+                        決定是否進入受傷或無傷狀態，當HP&lt;=0則判定死亡，依據不同狀態表演對應動畫與音效。</p>
+                </div>
+            </div>
+
+            <div class="project-block-mini">
+                <div class="img-wrap" onclick="openModal(this)">
+                    <img src="static/image/PhantomWorld_05.png" alt="PhantomWorld_05">
+                </div>
+                <div class="content-wrap">
+                    <h4 class="font-bold text-lg mb-2 text-slate-900">升級系統</h4>
+                    <p class="text-slate-500 text-sm leading-relaxed">
+                        利用ScriptableObject管理角色數值與經驗成長表，<br>
+                        使角色強度根據等級自動提升。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 03 -->
+        <section id="Project3" class="project-section max-w-5xl mx-auto">
+            <header class="mb-10">
+                <div class="font-bold text-lg tracking-widest uppercase mb-4" style="color:#8aaac8;">個人專題</div>
+                <h2 class="text-5xl font-bold text-slate-900 tracking-tight">國民旅遊目的地與匯率之關聯分析</h2>
+                <h2 class="text-2xl font-bold tracking-tight mt-2" style="color:#a9a9a9;">Outbound Travel Destinations &
+                    Exchange Rate Trends</h2>
+            </header>
+
+            <div class="project-image-container">
+                <img src="static/image/OutboundTravelData_01.png" alt="OutboundTravelData_01">
+            </div>
+            <div class="project-image-container">
+                <img src="static/image/OutboundTravelData_02.png" alt="OutboundTravelData_02">
+            </div>
+
+            <span class="no-underline">🔗</span> <a href="https://reurl.cc/Ebb4Dk" target="_blank"
+                class="inline-block mb-6 text-blue-600 font-bold hover:underline">Google簡報</a>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-slate-600">
+                <div class="md:col-span-2">
+                    <h4 class="font-bold text-lg mb-4 text-slate-900">專題簡介</h4>
+                    <ul class="space-y-2 text-slate-500">
+                        <li>• 使用Python,Pandas整理資料，篩選出前十大熱門旅遊目的地</li>
+                        <li>• 透過長條圖、圓餅圖呈現各國出國人數比例</li>
+                        <li>• 利用折線圖呈現旅遊人數與匯率的時間趨勢</li>
+                        <li>• 探討旅遊人數與匯率之間的潛在關聯，並以直觀圖表呈現分析結果</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 04 -->
+        <section id="Project4" class="project-section max-w-5xl mx-auto">
+            <header class="mb-10">
+                <h2 class="text-5xl font-bold text-slate-900 tracking-tight">設計作品</h2>
+                <h2 class="text-2xl font-bold tracking-tight mt-2" style="color:#a9a9a9;">3D Design</h2>
+            </header>
+
+            <div class="project-image-container">
+                <img src="static/image/Design_01.png" alt="Design_01">
+            </div>
+
+            <span class="no-underline">🔗</span> <a href="https://www.artstation.com/coral_persimmon/albums/8983884"
+                target="_blank" class="inline-block mb-6 text-blue-600 font-bold hover:underline">個人作品網站</a>
+            <span class="no-underline">🔗</span> <a href="https://www.youtube.com/watch?v=KGM2dL0MD_0" target="_blank"
+                class="inline-block mb-6 text-blue-600 font-bold hover:underline">商業廣告影片</a>
+
+            <div class="project-block-mini">
+                <div class="img-double-wrap flex gap-2">
+                    <div class="img-item" onclick="openModal(this)">
+                        <img src="static/image/Design_02.png" alt="Design_02">
+                    </div>
+                    <div class="img-item" onclick="openModal(this)">
+                        <img src="static/image/Design_03.png" alt="Design_03">
+                    </div>
+                </div>
+
+                <div class="content-wrap">
+                    <h4 class="font-bold text-lg mb-2 text-slate-900">插畫接案</h4>
+                    <p class="text-slate-500 text-sm leading-relaxed">
+                        新竹縣政府稅務局 - 社群圖文合作
+                    </p>
+                    <span class="no-underline">🔗</span> <a href="https://www.facebook.com/share/p/1AH86a7yMV/"
+                        target="_blank"
+                        class="inline-block mb-6 text-blue-600 font-bold text-sm hover:underline">社群貼文-01</a>
+                    <span class="no-underline">🔗</span> <a href="https://www.facebook.com/share/p/1Dp4kBPXNP/"
+                        target="_blank"
+                        class="inline-block mb-6 text-blue-600 font-bold text-sm hover:underline">社群貼文-02</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- end -->
+        <section id="certificates" class="project-section max-w-5xl mx-auto">
+            <h2 class="text-4xl font-bold mb-12 text-slate-900">專業證照</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <div class="cert-card">
+                    <div class="cert-card-img-container" onclick="openModal(this)">
+                        <img src="static/image/ITS_Java.jpg" alt="ITS_Java">
+                    </div>
+                    <h4 class="font-bold text-slate-900">ITS Java</h4>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-card-img-container" onclick="openModal(this)">
+                        <img src="static/image/ITS_Python.jpg" alt="ITS_Python">
+                    </div>
+                    <h4 class="font-bold text-slate-900">ITS_Python</h4>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Lightbox 遮罩 HTML -->
+    <div id="image-modal" onclick="closeModal()">
+        <img id="modal-img" src="" alt="放大檢視">
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script>
+
+        const links = document.querySelectorAll('.menu-link');
+        const modal = document.getElementById('image-modal');
+        const modalImg = document.getElementById('modal-img');
+
+        //點擊放大邏輯
+        function openModal(element) {
+            const imgSrc = element.querySelector('img').src;
+            modalImg.src = imgSrc;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            setTimeout(() => { modalImg.src = ''; }, 300);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        //點擊選單切換
+        links.forEach(link => {
+            link.addEventListener('click', function () {
+                links.forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        //滾動更新切換
+        window.addEventListener('scroll', () => {
+            let fromTop = window.scrollY + 150; //偵測點偏移量
+
+            links.forEach(link => {
+                if (link.hash) {
+                    let section = document.querySelector(link.hash);
+                    if (section) {
+                        if (
+                            section.offsetTop <= fromTop &&
+                            section.offsetTop + section.offsetHeight > fromTop
+                        ) {
+                            links.forEach(l => l.classList.remove('active'));
+                            link.classList.add('active');
+                        }
+                    }
+                }
+            });
+        });
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('main-content');
+        const closeBtn = document.getElementById('close-sidebar-btn');
+        const openBtn = document.getElementById('open-sidebar-btn');
+
+        // 點擊icon-關閉側欄
+        closeBtn.addEventListener('click', () => {
+            sidebar.classList.add('sidebar-hidden');
+            mainContent.classList.add('main-full');
+            openBtn.style.display = 'block';
+        });
+
+        // 點擊icon-打開側欄
+        openBtn.addEventListener('click', () => {
+            sidebar.classList.remove('sidebar-hidden');
+            mainContent.classList.remove('main-full');
+            openBtn.style.display = 'none';
+        });
+    </script>
+</body>
+
+</html>
